@@ -1,9 +1,11 @@
 var app = app || {};
 
 
-app.Book = Backbone.Model.extend({});
+app.Book = Backbone.Model.extend({
+    urlRoot: '/books/api/'
+});
 
 app.BooksCollection = Backbone.Collection.extend({
-    url: '/books/api',
+    url: '/books/api/',
     model: app.Book
 });

@@ -9,8 +9,25 @@
     <div id="main-view"></div>
 
     <!-- templates -->
-    <script type="text/template" id="book-listing">
+    <script type="text/template" id="book-listing-tmpl">
       <h2>Books</h2>
+      <ul id="books-list">
+      </ul>
+    </script>
+
+    <script type="text/template" id="book-ele-tmpl">
+      <span class="title"><%- book.title %></span> | 
+      <%- book.description %> | 
+      Finished: <input type="checkbox" name="finished" class="finished" <% if (book.finished) { %> checked <% } %> /> |
+      <a class="edit">Edit</a>
+    </script>
+
+    <script type="text/template" id="book-detail-tmpl">
+      <table>
+	<tr><th>Title</th><td> <%- book.title %></td></tr>
+	<tr><th>Description</th><td> <%- book.description %></td></tr>
+      </table>
+      <a href="#/">Back</a>
     </script>
     
     <!-- libs -->
