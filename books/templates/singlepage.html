@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Books tracker</title>
+  </head>
+  <body>
+    <h1>My Books tracker</h1>
+
+    <div id="main-view"></div>
+
+    <!-- templates -->
+    <script type="text/template" id="book-listing">
+      <h2>Books</h2>
+    </script>
+    
+    <!-- libs -->
+    <script src="{{ url_for('books.static', filename='lib/jquery-1.10.2.min.js') }}"></script>
+    <script src="{{ url_for('books.static', filename='lib/underscore-min.js') }}"></script>
+    <script src="{{ url_for('books.static', filename='lib/backbone-min.js') }}"></script>
+
+    <!-- app javascript files -->
+    <script src="{{ url_for('books.static', filename='app/js/models.js') }}"></script>
+    <script src="{{ url_for('books.static', filename='app/js/controllers.js') }}"></script>
+    <script src="{{ url_for('books.static', filename='app/js/app.js') }}"></script>
+  </body>
+
+</html>
