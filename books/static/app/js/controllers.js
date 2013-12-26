@@ -10,10 +10,11 @@ app.BookEleController = Backbone.View.extend({
     events: {
 	'click .title': 'goToDetails',
 	'click .finished': 'finished',
-	'click .edit': 'edit'
+	'click .edit': 'edit',
+	'click .del': 'del'
     },
     render: function() {
-	this.$el.html( this.template({ book: this.model }) );
+	this.$el.html( this.template({ book: this.model.toJSON() }) );
 	return this;
     },
 
@@ -22,7 +23,16 @@ app.BookEleController = Backbone.View.extend({
 	alert("Save to db");
     },
     edit: function() {
-	alert("edit form will come here");
+	id = this.model.toJSON()._id.$oid;
+	app.router.navigate("/edit/" + id, {trigger: true});
+    },
+    del: function() {
+	this.model.id = this.model.toJSON()._id.$oid;
+	this.model.destroy({
+	    success: function (data) {
+		console.log(data, "success");
+	    }
+	});
     }
 });
 
@@ -42,7 +52,7 @@ app.BooksListController = Backbone.View.extend({
 
     render: function() {
 	this.$el.html( this.template() );
-	_.each( this.collection.toJSON(), 
+	_.each( this.collection.models, 
 		function( model ) {
 		    var ctrl = new app.BookEleController({model: model});
 		    this.$("ul").append(ctrl.render().el);
@@ -63,7 +73,7 @@ app.BookDetailController = Backbone.View.extend({
 		self.render();
 	    },
 	    error: function(data) {
-		console.log(data, this);
+		console.log();
 	    }
 	});
     },
@@ -71,5 +81,66 @@ app.BookDetailController = Backbone.View.extend({
     render: function () {
 	this.$el.html( this.template({ book: this.model.toJSON() }) );
 	return this;
+    }
+});
+
+app.BookEditController = Backbone.View.extend({
+    el: '#main-view',
+    template: _.template( $('#book-edit-tmpl').html() ),
+    
+    events: {
+	'submit form': 'save'
+    },
+    initialize: function() {
+	self = this;
+	this.model.fetch({
+	    success: function(data) {
+		self.render();
+	    },
+	    error: function(data) {
+		console.log(data);
+	    }
+	});
+    },
+    render: function() {
+	this.$el.html( this.template({ book: this.model.toJSON() }) );
+	this.$('form').submit(function(e){ e.preventDefault(); });
+	return this;
+    },
+
+    save: function () {
+	console.log("IN save");
+	this.model.set({ 
+	    title: this.$('input[name=title]').val(),
+	    description: this.$('textarea').val() 
+	});
+	this.model.save();
+	app.router.navigate("/", {trigger: true})
+    }
+});
+
+app.BookAddController = Backbone.View.extend({
+    el: '#main-view',
+    template: _.template( $('#book-add-tmpl').html() ),
+    
+    events: {
+	'submit form': 'save'
+    },
+    initialize: function() {
+	this.model = new app.Book();
+	this.render();
+    },
+    render: function() {
+	this.$el.html( this.template() );
+	this.$('form').submit(function(e){ e.preventDefault(); });
+	return this;
+    },
+
+    save: function () {
+	this.model.save({ 
+	    title: this.$('input[name=title]').val(),
+	    description: this.$('textarea').val() 
+	});
+	app.router.navigate("/", {trigger: true})
     }
 });

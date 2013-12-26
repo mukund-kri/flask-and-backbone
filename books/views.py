@@ -10,8 +10,6 @@ booksbp = Blueprint('books',
 
 @booksbp.route('/')
 def home():
-    for book in db.Book.find():
-        print book
     return render_template('singlepage.html')
 
 
@@ -20,11 +18,11 @@ def home():
 the rest api.
 '''
 
-from flask import abort, jsonify
+from flask import abort, jsonify, request
 from flask.views import MethodView
 from bson.objectid import ObjectId
 
-from lib import mjsonify
+from lib import mjsonify, to_obj
 
 
 class BooksApi(MethodView):
@@ -32,8 +30,7 @@ class BooksApi(MethodView):
     serve up json rest api for books
     '''
 
-    def get(self, book_id):
-        
+    def get(self, book_id):        
         if book_id:
             # look up book by id and return
             try:
@@ -48,15 +45,20 @@ class BooksApi(MethodView):
 
     def post(self):
         ''' create a new book '''
-        pass
+        book = to_obj(request.data)
+        db.books.save(book)
+        return  'success'
 
     def delete(self, book_id):
-        ''' delete the book with id book_id '''
-        pass
+        db.books.remove({"_id": ObjectId(book_id)})
+        return 'success'
 
     def put(self, book_id):
         ''' update a book '''
-        pass
+        book = to_obj(request.data)
+        del(book['id'])
+        db.books.save(book)
+        return  'success'
 
 
 books_api = BooksApi.as_view('api')

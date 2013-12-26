@@ -19,7 +19,8 @@
       <span class="title"><%- book.title %></span> | 
       <%- book.description %> | 
       Finished: <input type="checkbox" name="finished" class="finished" <% if (book.finished) { %> checked <% } %> /> |
-      <a class="edit">Edit</a>
+      <a class="edit">Edit</a> |
+      <a class="del">Delete</a>
     </script>
 
     <script type="text/template" id="book-detail-tmpl">
@@ -28,6 +29,39 @@
 	<tr><th>Description</th><td> <%- book.description %></td></tr>
       </table>
       <a href="#/">Back</a>
+    </script>
+    
+    <script type="text/template" id="book-edit-tmpl">
+      <h2>Edit Book details</h2>
+      <form>
+	<table>
+	  <tr>
+	    <th><label for="title">Title</label></th>
+	    <td><input name="title" value="<%- book.title %>" /></td>
+	  </tr>
+	  <tr>
+	    <th><label for="description">Description</label></th>
+	    <td><textarea name="title"><%- book.description %></textarea></td>
+	  </tr>
+	  <tr>
+	    <td><input type="submit" value="save" /></td>
+      </form>
+    </script>
+    <script type="text/template" id="book-add-tmpl">
+      <h2>Add a Book</h2>
+      <form>
+	<table>
+	  <tr>
+	    <th><label for="title">Title</label></th>
+	    <td><input name="title" /></td>
+	  </tr>
+	  <tr>
+	    <th><label for="description">Description</label></th>
+	    <td><textarea name="title"></textarea></td>
+	  </tr>
+	  <tr>
+	    <td><input type="submit" value="save" /></td>
+      </form>
     </script>
     
     <!-- libs -->
