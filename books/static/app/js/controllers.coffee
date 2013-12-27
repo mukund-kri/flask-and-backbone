@@ -1,5 +1,5 @@
 class BookEleView extends Backbone.View
-  tagName: 'li'
+  tagName: 'tr'
   tagClass: 'a-book'
   template: _.template( ($ "#book-ele-tmpl").html() )
   render: ->
@@ -35,7 +35,7 @@ class BookListView extends Backbone.View
     @$el.html @template()
     for model in @collection.models
       bookEle = new BookEleView { model: model }
-      (@$ "ul").append bookEle.render().el
+      (@$ "table").append bookEle.render().el
 
 
 class BookDetailView extends Backbone.View

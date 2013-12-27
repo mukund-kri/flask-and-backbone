@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head class="no-js" lang="en">
     <title>Books tracker</title>
+    <link rel="stylesheet" href="/books/static/lib/foundation/css/foundation.min.css" />
+    <script src="/books/static/lib/foundation/js/modernizr.js"></script>
   </head>
   <body>
-    <h1>My Books tracker</h1>
-
-    <div id="main-view"></div>
-    <a href="#/add">Add a Book</a>
-
+    <div class="row">
+      <h1>My Books tracker</h1>
+      <div id="main-view"></div>
+      <a href="#/add">Add a Book</a>
+    </div>
     <!-- templates -->
     <script type="text/template" id="book-listing-tmpl">
       <h2>Books</h2>
-      <ul id="books-list">
-      </ul>
+      <table id="books-list">
+	<tr>
+	  <th>Title</th>
+	  <th>Description</th>
+	  <th>Actions</th>
+	<tr>
+      </table>
     </script>
 
     <script type="text/template" id="book-ele-tmpl">
-      <span class="title"><%- book.title %></span> | 
-      <%- book.description %> | 
-      Finished: <input type="checkbox" name="finished" class="finished" <% if (book.finished) { %> checked <% } %> /> |
-      <a class="edit">Edit</a> |
-      <a class="del">Delete</a>
+      ksjfdjf
+      <td class="title"><%- book.title %></td>  
+      <td><%- book.description %></td>
+      <td><input type="checkbox" name="finished" class="finished" <% if (book.finished) { %> checked <% } %> /></td>
+      <td><a class="edit">Edit</a></td>
+      <td><a class="del">Delete</a></td>
     </script>
 
     <script type="text/template" id="book-detail-tmpl">
@@ -69,6 +77,7 @@
     <script src="{{ url_for('books.static', filename='lib/jquery-1.10.2.min.js') }}"></script>
     <script src="{{ url_for('books.static', filename='lib/underscore-min.js') }}"></script>
     <script src="{{ url_for('books.static', filename='lib/backbone-min.js') }}"></script>
+    <script src="{{ url_for('books.static', filename='lib/foundation/js/foundation.min.js') }}"></script>
 
     <!-- app javascript files -->
     <script src="{{ url_for('books.static', filename='app/js/models.js') }}"></script>
